@@ -9,27 +9,49 @@ import Foundation
 
 protocol APICallerProtocol {
     var constants : ConstantsProtocol { get }
+    
+    func getTopStories(completion: @escaping (Result<[String], Error>) -> Void)
 }
 
 protocol ConstantsProtocol {
-    var apiKey: String { get }
-    var topHeadlinesURL: URL { get }
+    var topHeadlinesURL: URL? { get }
 }
 
 final class Constants: ConstantsProtocol {
-    let apiKey: String
-    let topHeadlinesURL: URL
+    let topHeadlinesURL: URL?
     
     init(apiKey: String) {
-        self.apiKey = apiKey
-        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=\(apiKey)")!
+        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=\(apiKey)")
     }
 }
 
 final class APICaller: APICallerProtocol {
-    static var shared: APICallerProtocol = APICaller()
-    
-    lazy var constants: ConstantsProtocol = Constants(apiKey: "b505953bf7614254a430c1a8bdea8e6a")
+    static let shared: APICallerProtocol = APICaller()
+    let constants: ConstantsProtocol = Constants(apiKey: "b505953bf7614254a430c1a8bdea8e6a")
     
     private init() {}
+    
+    public func getTopStories(completion: @escaping (Result<[String], Error>) -> Void) {
+        guard let url = constants.topHeadlinesURL else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            else if let data = data {
+                do {
+                    let result = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: data)
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            
+            
+        }.resume()
+    
+    }
+    
 }
+
+// Models
+
