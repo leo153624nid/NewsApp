@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APICallerProtocol {
-    var constants : ConstantsProtocol { get }
+    var constants: ConstantsProtocol { get }
     
     func getTopStories(completion: @escaping (Result<[Article ], Error>) -> Void)
 }
@@ -42,22 +42,17 @@ final class APICaller: APICallerProtocol {
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
                     
-                    print(result.articles.count)
                     completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
                 }
             }
-            
-            
-        }.resume()
-    
+        }
+        task.resume()
     }
-    
 }
 
 // Models
-
 struct APIResponse: Codable {
     let articles: [Article]
 }
