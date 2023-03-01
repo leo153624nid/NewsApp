@@ -13,16 +13,16 @@ protocol APICallerProtocol {
 
 protocol ConstantsProtocol {
     var apiKey: String { get }
-    var topHeadlinesURL: String { get }
+    var topHeadlinesURL: URL { get }
 }
 
 final class Constants: ConstantsProtocol {
-    let apiKey : String
-    let topHeadlinesURL : String
+    let apiKey: String
+    let topHeadlinesURL: URL
     
     init(apiKey: String) {
         self.apiKey = apiKey
-        self.topHeadlinesURL = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=\(apiKey)"
+        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=\(apiKey)")!
     }
 }
 
