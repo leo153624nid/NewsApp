@@ -21,7 +21,7 @@ final class Constants: ConstantsProtocol {
     let topHeadlinesURL: URL?
     
     init(apiKey: String) {
-        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=\(apiKey)")
+        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=\(apiKey)")
     }
 }
 
@@ -40,7 +40,9 @@ final class APICaller: APICallerProtocol {
             }
             else if let data = data {
                 do {
-                    let result = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: data)
+                    let result = try JSONDecoder().decode(APIResponse.self, from: data)
+                    
+                    print(result.articles.count)
                 } catch {
                     completion(.failure(error))
                 }
@@ -55,3 +57,19 @@ final class APICaller: APICallerProtocol {
 
 // Models
 
+struct APIResponse: Codable {
+    let articles: [Article]
+}
+
+struct Article: Codable {
+    let source: Source
+    let title: String
+    let description: String
+    let url: String
+    let urlToImage: String
+    let publishedAt: String
+}
+
+struct Source: Codable {
+    let name: String
+}
