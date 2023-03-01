@@ -38,9 +38,18 @@ class NewsTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let newsImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .red
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        contentView.addSubview(newsTitleLabel)
+        contentView.addSubview(newsSubTitleLabel)
+        contentView.addSubview(newsImageView)
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +66,16 @@ class NewsTableViewCell: UITableViewCell {
     }
     
     func configure(with viewModel: NewsTableViewCellViewModel) {
+        newsTitleLabel.text = viewModel.title
+        newsSubTitleLabel.text = viewModel.subtitle
         
+        // setting image
+        if let data = viewModel.imageData {
+            newsImageView.image = UIImage(data: data)
+        }
+        else {
+            // fetching image
+        }
     }
 }
 
