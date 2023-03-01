@@ -18,7 +18,10 @@ class ViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         apiCaller.getTopStories { result in
-            
+            switch result {
+                case .success(let articles): break
+                case .failure(let error): print(error.localizedDescription)
+            }
         }
     }
     
