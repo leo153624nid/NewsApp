@@ -6,16 +6,23 @@
 //
 
 import UIKit
-// API key = b505953bf7614254a430c1a8bdea8e6a
-// url = https://newsapi.org/v2/everything?domains=wsj.com&apiKey=b505953bf7614254a430c1a8bdea8e6a
 
 class ViewController: UIViewController {
     private var apiCaller: APICallerProtocol
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return table
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "News"
         view.backgroundColor = .systemBackground
+        
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
         
         apiCaller.getTopStories { result in
             switch result {
@@ -35,6 +42,27 @@ class ViewController: UIViewController {
         super.init(coder: coder)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
 
 }
 
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+       
+        return cell
+    }
+}
