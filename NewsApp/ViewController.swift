@@ -17,6 +17,9 @@ class ViewController: UIViewController {
         title = "News"
         view.backgroundColor = .systemBackground
         
+        apiCaller.getTopStories { result in
+            
+        }
     }
     
     init(with serviceManager: APICallerProtocol) {
