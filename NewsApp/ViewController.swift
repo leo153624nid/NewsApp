@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         apiCaller.getTopStories { result in
             switch result {
-                case .success(let articles): break
+                case .success(let articles): print(articles.count)
                 case .failure(let error): print(error.localizedDescription)
             }
         }
