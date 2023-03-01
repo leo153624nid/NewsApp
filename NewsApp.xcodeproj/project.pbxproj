@@ -14,6 +14,7 @@
 		FAC6951B29AF3F510065FE03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC6951A29AF3F510065FE03 /* Assets.xcassets */; };
 		FAC6951E29AF3F510065FE03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC6951C29AF3F510065FE03 /* LaunchScreen.storyboard */; };
 		FAC6952729AF43E20065FE03 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6952629AF43E20065FE03 /* APICaller.swift */; };
+		FAC6952A29AF6D5D0065FE03 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		FAC6951D29AF3F510065FE03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAC6951F29AF3F510065FE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC6952629AF43E20065FE03 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				FAC6951C29AF3F510065FE03 /* LaunchScreen.storyboard */,
 				FAC6951F29AF3F510065FE03 /* Info.plist */,
 				FAC6952629AF43E20065FE03 /* APICaller.swift */,
+				FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */,
 			);
 			path = NewsApp;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				FAC6951629AF3F4F0065FE03 /* ViewController.swift in Sources */,
 				FAC6951229AF3F4F0065FE03 /* AppDelegate.swift in Sources */,
+				FAC6952A29AF6D5D0065FE03 /* NewsTableViewCell.swift in Sources */,
 				FAC6951429AF3F4F0065FE03 /* SceneDelegate.swift in Sources */,
 				FAC6952729AF43E20065FE03 /* APICaller.swift in Sources */,
 			);
