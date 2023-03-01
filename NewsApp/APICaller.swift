@@ -10,7 +10,7 @@ import Foundation
 protocol APICallerProtocol {
     var constants : ConstantsProtocol { get }
     
-    func getTopStories(completion: @escaping (Result<[String], Error>) -> Void)
+    func getTopStories(completion: @escaping (Result<[Article ], Error>) -> Void)
 }
 
 protocol ConstantsProtocol {
@@ -31,7 +31,7 @@ final class APICaller: APICallerProtocol {
     
     private init() {}
     
-    public func getTopStories(completion: @escaping (Result<[String], Error>) -> Void) {
+    public func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void) {
         guard let url = constants.topHeadlinesURL else { return }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -43,6 +43,7 @@ final class APICaller: APICallerProtocol {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
                     
                     print(result.articles.count)
+                    completion(.success(result.articles))
                 } catch {
                     completion(.failure(error))
                 }
@@ -64,9 +65,9 @@ struct APIResponse: Codable {
 struct Article: Codable {
     let source: Source
     let title: String
-    let description: String
-    let url: String
-    let urlToImage: String
+    let description: String?
+    let url: String?
+    let urlToImage: String?
     let publishedAt: String
 }
 
