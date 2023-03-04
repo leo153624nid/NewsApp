@@ -7,16 +7,6 @@
 
 import Foundation
 
-protocol APICallerProtocol {
-    var constants: ConstantsProtocol { get }
-    
-    func getTopStories(completion: @escaping (Result<[Article ], Error>) -> Void)
-}
-
-protocol ConstantsProtocol {
-    var topHeadlinesURL: URL? { get }
-}
-
 final class Constants: ConstantsProtocol {
     let topHeadlinesURL: URL?
     
@@ -50,22 +40,4 @@ final class APICaller: APICallerProtocol {
         }
         task.resume()
     }
-}
-
-// Models
-struct APIResponse: Codable {
-    let articles: [Article]
-}
-
-struct Article: Codable {
-    let source: Source
-    let title: String
-    let description: String?
-    let url: String?
-    let urlToImage: String?
-    let publishedAt: String
-}
-
-struct Source: Codable {
-    let name: String
 }

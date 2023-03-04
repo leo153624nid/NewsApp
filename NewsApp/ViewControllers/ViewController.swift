@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class ViewController: UIViewController {
     private var apiCaller: APICallerProtocol
@@ -16,6 +17,7 @@ class ViewController: UIViewController {
     }()
     
     private var viewModels = [NewsTableViewCellViewModel]()
+    private var articles = [Article]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +50,7 @@ class ViewController: UIViewController {
         apiCaller.getTopStories { [weak self] result in
             switch result {
                 case .success(let articles):
-                    print(articles.count)
+                    self?.articles = articles
                     self?.viewModels = articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
@@ -67,6 +69,11 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let article = articles[indexPath.row]
+        
+        guard let url = URL(string: article.url ?? "") else { return }
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true, completion: nil)
     }
 }
 

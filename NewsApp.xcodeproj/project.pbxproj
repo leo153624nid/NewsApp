@@ -15,6 +15,8 @@
 		FAC6951E29AF3F510065FE03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC6951C29AF3F510065FE03 /* LaunchScreen.storyboard */; };
 		FAC6952729AF43E20065FE03 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6952629AF43E20065FE03 /* APICaller.swift */; };
 		FAC6952A29AF6D5D0065FE03 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */; };
+		FAC6958829B33D190065FE03 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6958729B33D190065FE03 /* Models.swift */; };
+		FAC6958B29B33D3C0065FE03 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC6958A29B33D3C0065FE03 /* Protocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		FAC6951F29AF3F510065FE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC6952629AF43E20065FE03 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		FAC6958729B33D190065FE03 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		FAC6958A29B33D3C0065FE03 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +64,67 @@
 		FAC6951029AF3F4F0065FE03 /* NewsApp */ = {
 			isa = PBXGroup;
 			children = (
-				FAC6951129AF3F4F0065FE03 /* AppDelegate.swift */,
-				FAC6951329AF3F4F0065FE03 /* SceneDelegate.swift */,
-				FAC6951529AF3F4F0065FE03 /* ViewController.swift */,
-				FAC6951729AF3F4F0065FE03 /* Main.storyboard */,
-				FAC6951A29AF3F510065FE03 /* Assets.xcassets */,
-				FAC6951C29AF3F510065FE03 /* LaunchScreen.storyboard */,
-				FAC6951F29AF3F510065FE03 /* Info.plist */,
-				FAC6952629AF43E20065FE03 /* APICaller.swift */,
-				FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */,
+				FAC6958529B33C7E0065FE03 /* App */,
+				FAC6958429B33C6E0065FE03 /* ApiCaller */,
+				FAC6958329B33C380065FE03 /* Views */,
+				FAC6958229B33C190065FE03 /* Protocols */,
+				FAC6958129B33C090065FE03 /* Models */,
+				FAC6958629B33CE50065FE03 /* ViewControllers */,
 			);
 			path = NewsApp;
+			sourceTree = "<group>";
+		};
+		FAC6958129B33C090065FE03 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6958729B33D190065FE03 /* Models.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FAC6958229B33C190065FE03 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6958A29B33D3C0065FE03 /* Protocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		FAC6958329B33C380065FE03 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6952929AF6D5D0065FE03 /* NewsTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FAC6958429B33C6E0065FE03 /* ApiCaller */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6952629AF43E20065FE03 /* APICaller.swift */,
+			);
+			path = ApiCaller;
+			sourceTree = "<group>";
+		};
+		FAC6958529B33C7E0065FE03 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6951129AF3F4F0065FE03 /* AppDelegate.swift */,
+				FAC6951329AF3F4F0065FE03 /* SceneDelegate.swift */,
+				FAC6951A29AF3F510065FE03 /* Assets.xcassets */,
+				FAC6951C29AF3F510065FE03 /* LaunchScreen.storyboard */,
+				FAC6951729AF3F4F0065FE03 /* Main.storyboard */,
+				FAC6951F29AF3F510065FE03 /* Info.plist */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		FAC6958629B33CE50065FE03 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FAC6951529AF3F4F0065FE03 /* ViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +199,9 @@
 			files = (
 				FAC6951629AF3F4F0065FE03 /* ViewController.swift in Sources */,
 				FAC6951229AF3F4F0065FE03 /* AppDelegate.swift in Sources */,
+				FAC6958B29B33D3C0065FE03 /* Protocols.swift in Sources */,
 				FAC6952A29AF6D5D0065FE03 /* NewsTableViewCell.swift in Sources */,
+				FAC6958829B33D190065FE03 /* Models.swift in Sources */,
 				FAC6951429AF3F4F0065FE03 /* SceneDelegate.swift in Sources */,
 				FAC6952729AF43E20065FE03 /* APICaller.swift in Sources */,
 			);
