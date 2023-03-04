@@ -52,7 +52,7 @@ class ViewController: UIViewController {
                     self?.viewModels = articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
-                                                   imageURL: URL(string: $0.url ?? ""))
+                                                   imageURL: URL(string: $0.urlToImage ?? ""))
                     })
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
