@@ -11,9 +11,11 @@ class ViewController: UIViewController {
     private var apiCaller: APICallerProtocol
     private let tableView: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(NewsTableViewCell.self, forCellReuseIdentifier: NewsTableViewCell.identifier)
         return table
     }()
+    
+    private var viewModels = [NewsTableViewCellViewModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +26,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        apiCaller.getTopStories { result in
-            switch result {
-                case .success(let articles): print(articles.count)
-                case .failure(let error): print(error.localizedDescription)
-            }
-        }
+        getNews()
     }
     
     init(with serviceManager: APICallerProtocol) {
@@ -46,6 +43,15 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
     }
+    
+    private func getNews() {
+        apiCaller.getTopStories { result in
+            switch result {
+                case .success(let articles): print(articles.count)
+                case .failure(let error): print(error.localizedDescription)
+            }
+        }
+    }
 
 }
 
@@ -57,12 +63,14 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-       
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier,
+                                                       for: indexPath)
+                as? NewsTableViewCell else { fatalError() }
+        cell.configure(with: viewModels[indexPath.row])
         return cell
     }
 }
