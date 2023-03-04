@@ -45,9 +45,18 @@ class ViewController: UIViewController {
     }
     
     private func getNews() {
-        apiCaller.getTopStories { result in
+        apiCaller.getTopStories { [weak self] result in
             switch result {
-                case .success(let articles): print(articles.count)
+                case .success(let articles):
+                    print(articles.count)
+                    self?.viewModels = articles.compactMap({
+                        NewsTableViewCellViewModel(title: $0.title,
+                                                   subtitle: $0.description ?? "-",
+                                                   imageURL: URL(string: $0.url ?? ""))
+                    })
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
                 case .failure(let error): print(error.localizedDescription)
             }
         }
