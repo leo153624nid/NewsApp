@@ -79,13 +79,24 @@ class NewsTableViewCell: UITableViewCell {
         }
         else if let url = viewModel.imageURL {
             // fetching image
-            URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
-                guard let data = data, error == nil else { return }
-                viewModel.imageData = data
-                DispatchQueue.main.async {
-                    self?.newsImageView.image = UIImage(data: data)
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                if let data = try? Data(contentsOf: url) {
+                    viewModel.imageData = data
+                    DispatchQueue.main.async {
+                        self?.newsImageView.image = UIImage(data: data)
+                    }
                 }
-            }.resume()
+                else {
+                    print("error fetching")
+                }
+            }
+//            URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
+//                guard let data = data, error == nil else { return }
+//                viewModel.imageData = data
+//                DispatchQueue.main.async {
+//                    self?.newsImageView.image = UIImage(data: data)
+//                }
+//            }.resume()
         }
     }
 }
