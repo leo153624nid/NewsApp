@@ -73,7 +73,7 @@ class NewsTableViewCell: UITableViewCell {
         newsTitleLabel.text = viewModel.title
         newsSubTitleLabel.text = viewModel.subtitle
         
-        // caching image
+        // image from cache
         if let data = viewModel.imageData {
             newsImageView.image = UIImage(data: data)
         }

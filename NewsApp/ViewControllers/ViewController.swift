@@ -56,6 +56,7 @@ class ViewController: UIViewController {
                                                    subtitle: $0.description ?? "-",
                                                    imageURL: URL(string: $0.urlToImage ?? ""))
                     })
+                    
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
                     }
@@ -63,7 +64,6 @@ class ViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension ViewController: UITableViewDelegate {

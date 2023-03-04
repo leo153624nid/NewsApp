@@ -10,7 +10,7 @@ import Foundation
 protocol APICallerProtocol {
     var constants: ConstantsProtocol { get }
     
-    func getTopStories(completion: @escaping (Result<[Article ], Error>) -> Void)
+    func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void)
 }
 
 protocol ConstantsProtocol {
