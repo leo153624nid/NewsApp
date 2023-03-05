@@ -9,7 +9,7 @@ import Foundation
 
 final class UrlInfo: UrlInfoProtocol {
     var currentURL: URL?
-    var pageSize = 5
+    var pageSize = 3
     var page = 1
     var apiKey: String
     
@@ -43,20 +43,26 @@ final class APICaller: APICallerProtocol {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
+                if pagination {
+                    self.isPaginating = false
+                }
             }
             else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
                     completion(.success(result.articles))
-                   
+                    if pagination {
+                        self.isPaginating = false
+                    }
                 } catch {
                     completion(.failure(error))
+                    if pagination {
+                        self.isPaginating = false
+                    }
                 }
             }
         }
         task.resume()
-        if pagination {
-            self.isPaginating = false
-        }
+        
     }                        
 }

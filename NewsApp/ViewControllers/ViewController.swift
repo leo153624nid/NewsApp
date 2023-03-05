@@ -51,6 +51,7 @@ class ViewController: UIViewController {
             switch result {
                 case .success(let articles):
                     self?.articles.append(contentsOf: articles)
+                    print("articles: \(self?.articles.count)")
                     self?.viewModels.append(contentsOf: articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
@@ -65,8 +66,16 @@ class ViewController: UIViewController {
         }
     }
     
-    private func createSpinnerFooter() {
-        
+    private func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: view.frame.size.width,
+                                              height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        return footerView
     }
 }
 
@@ -100,11 +109,28 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { // TODO
         let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - 10 - scrollView.frame.size.height) {
+        
+        let barrier = tableView.contentSize.height - 200 - scrollView.frame.size.height
+//        let barrier: CGFloat = -110
+        
+        print("position: \(position), barrier: \(barrier)")
+        
+        if position > barrier {
+            
+            print("contentSize: \(tableView.contentSize.height), scrollViewSize: \(scrollView.frame.size.height)")
+            
             guard !apiCaller.isPaginating else { return }
-            getAndSetNews(pagination: true)
+            print("fetch more")
+            tableView.tableFooterView = createSpinnerFooter()
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.getAndSetNews(pagination: true)
+                DispatchQueue.main.async {
+                    self?.tableView.tableFooterView = nil
+                }
+            }
+            
         }
     }
 }
