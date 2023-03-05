@@ -46,16 +46,16 @@ class ViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
-    private func getNews() {
-        apiCaller.getTopStories { [weak self] result in
+    private func getNews(pagination: Bool = false) {
+        apiCaller.getTopStories(pagination: pagination) { [weak self] result in
             switch result {
                 case .success(let articles):
-                    self?.articles = articles
-                    self?.viewModels = articles.compactMap({
+                    self?.articles.append(contentsOf: articles)
+                    self?.viewModels.append(contentsOf: articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
                                                    imageURL: URL(string: $0.urlToImage ?? ""))
-                    })
+                    }))
                     
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -93,4 +93,8 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+}
+
+extension ViewController: UIScrollViewDelegate {
+    
 }
