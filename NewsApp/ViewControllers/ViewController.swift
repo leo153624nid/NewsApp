@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        getNews()
+        getAndSetNews()
     }
     
     init(with serviceManager: APICallerProtocol) {
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         tableView.frame = view.bounds
     }
     
-    private func getNews(pagination: Bool = false) {
+    private func getAndSetNews(pagination: Bool = false) {
         apiCaller.getTopStories(pagination: pagination) { [weak self] result in
             switch result {
                 case .success(let articles):
@@ -63,6 +63,10 @@ class ViewController: UIViewController {
                 case .failure(let error): print(error.localizedDescription)
             }
         }
+    }
+    
+    private func createSpinnerFooter() {
+        
     }
 }
 
@@ -96,5 +100,11 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UIScrollViewDelegate {
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - 10 - scrollView.frame.size.height) {
+            guard !apiCaller.isPaginating else { return }
+            getAndSetNews(pagination: true)
+        }
+    }
 }

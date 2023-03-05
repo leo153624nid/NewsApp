@@ -9,7 +9,7 @@ import Foundation
 
 final class UrlInfo: UrlInfoProtocol {
     var currentURL: URL?
-    var pageSize = 8
+    var pageSize = 5
     var page = 1
     var apiKey: String
     
@@ -29,11 +29,15 @@ final class UrlInfo: UrlInfoProtocol {
 final class APICaller: APICallerProtocol {
     static let shared: APICallerProtocol = APICaller()
     let urlInfo: UrlInfoProtocol = UrlInfo(apiKey: "b505953bf7614254a430c1a8bdea8e6a")
+    var isPaginating = false
     
     private init() {}
     
     public func getTopStories(pagination: Bool = false,
                               completion: @escaping (Result<[Article], Error>) -> Void) {
+        if pagination {
+            isPaginating = true
+        }
         guard let url = urlInfo.getNextPageURL() else { return }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -43,13 +47,16 @@ final class APICaller: APICallerProtocol {
             else if let data = data {
                 do {
                     let result = try JSONDecoder().decode(APIResponse.self, from: data)
-                    
                     completion(.success(result.articles))
+                   
                 } catch {
                     completion(.failure(error))
                 }
             }
         }
         task.resume()
+        if pagination {
+            self.isPaginating = false
+        }
     }                        
 }

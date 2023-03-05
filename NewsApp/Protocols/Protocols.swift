@@ -9,6 +9,7 @@ import Foundation
 
 protocol APICallerProtocol {
     var urlInfo: UrlInfoProtocol { get }
+    var isPaginating: Bool { get set }
     
     func getTopStories(pagination: Bool, completion: @escaping (Result<[Article], Error>) -> Void)
 }
