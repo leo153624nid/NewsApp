@@ -51,7 +51,7 @@ class ViewController: UIViewController {
             switch result {
                 case .success(let articles):
                     self?.articles.append(contentsOf: articles)
-                    print("articles: \(self?.articles.count)")
+//                    print("articles: \(self?.articles.count)")
                     self?.viewModels.append(contentsOf: articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
