@@ -7,22 +7,34 @@
 
 import Foundation
 
-final class Constants: ConstantsProtocol {
-    let topHeadlinesURL: URL?
+final class UrlInfo: UrlInfoProtocol {
+    var currentURL: URL?
+    var pageSize = 8
+    var page = 1
+    var apiKey: String
     
     init(apiKey: String) {
-        self.topHeadlinesURL = URL(string: "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=\(apiKey)")
+        self.currentURL = URL(string: "https://newsapi.org/v2/everything?q=Apple&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)")
+        self.apiKey = apiKey
+    }
+    
+    func getNextPageURL() -> URL? {
+        guard let url = URL(string: "https://newsapi.org/v2/everything?q=Apple&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)") else { return nil }
+        self.currentURL = url
+        self.page += 1
+        return self.currentURL
     }
 }
 
 final class APICaller: APICallerProtocol {
     static let shared: APICallerProtocol = APICaller()
-    let constants: ConstantsProtocol = Constants(apiKey: "b505953bf7614254a430c1a8bdea8e6a")
+    let urlInfo: UrlInfoProtocol = UrlInfo(apiKey: "b505953bf7614254a430c1a8bdea8e6a")
     
     private init() {}
     
-    public func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void) {
-        guard let url = constants.topHeadlinesURL else { return }
+    public func getTopStories(pagination: Bool = false,
+                              completion: @escaping (Result<[Article], Error>) -> Void) {
+        guard let url = urlInfo.getNextPageURL() else { return }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
