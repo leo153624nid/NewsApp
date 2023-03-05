@@ -8,11 +8,16 @@
 import Foundation
 
 protocol APICallerProtocol {
-    var constants: ConstantsProtocol { get }
+    var urlInfo: UrlInfoProtocol { get }
     
-    func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void)
+    func getTopStories(pagination: Bool, completion: @escaping (Result<[Article], Error>) -> Void)
 }
 
-protocol ConstantsProtocol {
-    var topHeadlinesURL: URL? { get }
+protocol UrlInfoProtocol {
+    var currentURL: URL? { get set }
+    var pageSize: Int { get set }
+    var page: Int { get set }
+    var apiKey: String { get set }
+    
+    func getNextPageURL() -> URL?
 }
