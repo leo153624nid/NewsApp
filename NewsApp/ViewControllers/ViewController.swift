@@ -51,7 +51,7 @@ class ViewController: UIViewController {
             switch result {
                 case .success(let articles):
                     self?.articles.append(contentsOf: articles)
-//                    print("articles: \(self?.articles.count)")
+                    print("articles: \(String(describing: self?.articles.count))")
                     self?.viewModels.append(contentsOf: articles.compactMap({
                         NewsTableViewCellViewModel(title: $0.title,
                                                    subtitle: $0.description ?? "-",
@@ -112,7 +112,7 @@ extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) { // TODO
         let position = scrollView.contentOffset.y
         
-        let barrier = tableView.contentSize.height - 200 - scrollView.frame.size.height
+        let barrier = tableView.contentSize.height - 100 - scrollView.frame.size.height
 //        let barrier: CGFloat = -110
         
         print("position: \(position), barrier: \(barrier)")

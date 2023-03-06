@@ -9,7 +9,7 @@ import Foundation
 
 final class UrlInfo: UrlInfoProtocol {
     var currentURL: URL?
-    var pageSize = 3
+    var pageSize = 6
     var page = 1
     var apiKey: String
     
